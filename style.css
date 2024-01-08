@@ -27,27 +27,7 @@
     background-image: url('./img/city.jpg');
 }
 
-.CONTENT {
-    position: fixed;
-    display: grid;
-    grid-template-columns: auto var(--propic-width) auto;
-    grid-template-rows: 100vh;
-    grid-template-areas: "void propic text";
-}
-
-.CONTENT .void,
-.CONTENT .profile-picture,
-.CONTENT .text {
-    background-color: rgba(0, 0, 0, 0.45);
-}
-
-.void {
-    grid-column: 0;
-    grid-area: void;
-}
-
 .profile-picture {
-    grid-area: propic;
     background-image: url('./img/ceo.jpg');
     background-position: center;
     background-size: cover;
@@ -55,8 +35,6 @@
 }
 
 .text {
-    grid-area: text;
-    grid-column: var(--text-width);
     overflow-x: hidden;
     overflow-y: scroll;
 }
@@ -106,6 +84,10 @@
     box-sizing: border-box;
 }
 
+.darker-background {
+    background-color: rgba(0, 0, 0, 0.45);
+}
+
 @keyframes fadein {
     from {
         opacity: 0;
@@ -140,105 +122,131 @@
     opacity: 0;
 }
 
-@keyframes bg-darkness-high {
-    from { background-color: rgba(0, 0, 0, 0.45); }
-    to { background-color: rgba(0, 0, 0, 1); }
+@media (orientation: portrait) {
+    .CONTENT {
+        display: block;
+    }
+
+    .CONTENT .void,
+    .CONTENT .profile-picture,
+    .CONTENT .text {
+        position: fixed;
+    }
 }
 
-@keyframes bg-darkness-low {
-    from { background-color: rgba(0, 0, 0, 1); }
-    to { background-color: rgba(0, 0, 0, 0.45); }
-}
+@media (orientation: landscape) {
+    .CONTENT {
+        position: fixed;
+        display: grid;
+        grid-template-columns: auto var(--propic-width) auto;
+        grid-template-rows: 100vh;
+        grid-template-areas: "void propic text";
+    }
 
-.bg-darkness-high-effect {
-    /* animation-name: bg-darkness-high;
-    animation-duration: 1s; */
-    background-color: rgba(0, 0, 0, 1);
-}
-
-.bg-darkness-low-effect {
-    /* animation-name: bg-darkness-low;
-    animation-duration: 1s; */
-    background-color: rgba(0, 0, 0, 0.45);
-}
-
-@keyframes text-to-left {
-    from {
-        grid-area: void;
-        width: 0;
+    .void {
         grid-column: 0;
+        grid-area: void;
+    }
+
+    .profile-picture {
+        grid-area: propic;
+    }
+
+    .text {
+        grid-area: text;
+        grid-column: var(--text-width);
+    }
+
+    @keyframes text-to-left {
+        from {
+            grid-area: void;
+            width: 0;
+            grid-column: 0;
+            overflow-y: hidden;
+            background-color: rgba(0, 0, 0, 0.45);
+        }
+        to {
+            width: var(--text-width);
+            grid-column: var(--text-width);
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+    }
+    
+    @keyframes text-to-right {
+        from {
+            grid-area: text;
+            width: 0;
+            grid-column: 0;
+            overflow-y: scroll;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        to {
+            width: var(--text-width);
+            grid-column: var(--text-width);
+            background-color: rgba(0, 0, 0, 0.45);
+        }
+    }
+    
+    .text-to-left-effect {
+        animation-name: text-to-left;
+        animation-duration: 1s;
+        grid-area: void;
         overflow-y: hidden;
+        background-color: rgba(0, 0, 0, 0.7);
     }
-    to {
-        width: var(--text-width);
-        grid-column: var(--text-width);
-    }
-}
-
-@keyframes text-to-right {
-    from {
+    
+    .text-to-right-effect {
+        animation-name: text-to-right;
+        animation-duration: 1s;
         grid-area: text;
-        width: 0;
-        grid-column: 0;
         overflow-y: scroll;
+        background-color: rgba(0, 0, 0, 0.45);
     }
-    to {
-        width: var(--text-width);
-        grid-column: var(--text-width);
+    
+    @keyframes void-to-right {
+        from {
+            grid-area: text;
+            width: var(--text-width);
+            grid-column: var(--text-width);
+            background-color: rgba(0, 0, 0, 0.45);
+        }
+        to {
+            width: 0;
+            grid-column: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
     }
-}
-
-.text-to-left-effect {
-    animation-name: text-to-left;
-    animation-duration: 1s;
-    grid-area: void;
-    overflow-y: hidden;
-}
-
-.text-to-right-effect {
-    animation-name: text-to-right;
-    animation-duration: 1s;
-    grid-area: text;
-    overflow-y: scroll;
-}
-
-@keyframes void-to-right {
-    from {
+    
+    @keyframes void-to-left {
+        from {
+            grid-area: void;
+            width: var(--text-width);
+            grid-column: var(--text-width);
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        to {
+            width: 0;
+            grid-column: 0;
+            background-color: rgba(0, 0, 0, 0.45);
+        }
+    }
+    
+    .void-to-right-effect {
+        animation-name: void-to-right;
+        animation-duration: 1s;
         grid-area: text;
-        width: var(--text-width);
-        grid-column: var(--text-width);
+        background-color: rgba(0, 0, 0, 0.7);
     }
-    to {
-        width: 0;
-        grid-column: 0;
-    }
-}
-
-@keyframes void-to-left {
-    from {
+    
+    .void-to-left-effect {
+        animation-name: void-to-left;
+        animation-duration: 1s;
         grid-area: void;
-        width: var(--text-width);
-        grid-column: var(--text-width);
+        background-color: rgba(0, 0, 0, 0.45);
     }
-    to {
-        width: 0;
-        grid-column: 0;
+    
+    .CONTAINER-overflow-y {
+        height: calc(100vh + 10px);
     }
-}
-
-.void-to-right-effect {
-    animation-name: void-to-right;
-    animation-duration: 1s;
-    grid-area: text;
-}
-
-.void-to-left-effect {
-    animation-name: void-to-left;
-    animation-duration: 1s;
-    grid-area: void;
-}
-
-.CONTAINER-overflow-y {
-    height: calc(100vh + 10px);
 }
 
