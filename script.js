@@ -28,7 +28,7 @@ function resetSectionFlags(exceptIndex) {
     }
 }
 
-function setAllInvisible(exceptIndex) {
+function setAllContentInvisible(exceptIndex) {
     for (let i = 0; i < CONTENT_DOM_list.length; i++) {
         if (i === exceptIndex) {
             CONTENT_DOM_list[i].style.opacity = 1;
@@ -38,7 +38,7 @@ function setAllInvisible(exceptIndex) {
 }
 
 /**
- * @param {number} step - 0 to 3
+ * @param {number} step - 0 (first background) to 1 (second background)
  */
 function setBackgroundPhase(step) {
     if (step < 2) {
@@ -50,24 +50,6 @@ function setBackgroundPhase(step) {
         
         background_DOMs[0].style.opacity = step === 0 ? 1 : 0;
         background_DOMs[1].style.opacity = step === 0 ? 0 : 1;
-    }
-    else {
-        // for brightness
-        let lowHighOrder;
-
-        if (step === 2 && scrollYDirection === -1) {
-            lowHighOrder = ['low', 'high'];
-        }
-        else if (step === 3 && scrollYDirection === 1) {
-            lowHighOrder = ['high', 'low'];
-        }
-
-        if (lowHighOrder) {
-            for (const dom of [void_DOM, profilePicture_DOM, text_DOM]) {
-                dom.classList.remove(`bg-darkness-${lowHighOrder[0]}-effect`);
-                dom.classList.add(`bg-darkness-${lowHighOrder[1]}-effect`);
-            }
-        }
     }
 }
 
@@ -103,9 +85,14 @@ function shiftContents(step) {
     }
 }
 
-// initial styles
-setAllInvisible(0);
+/** INITIAL STYLES */
+
+setAllContentInvisible(0);
 background_DOMs[1].style.opacity = 0;
+
+for (const dom of [void_DOM, profilePicture_DOM, text_DOM]) {
+    dom.classList.add('darker-background');
+}
 
 /** SCROLL EVENT */
 
@@ -113,7 +100,6 @@ background_DOMs[1].style.opacity = 0;
 window.addEventListener('scroll', () => {
     if (isContentReachBottom && window.scrollY === 0) {
         scrollYDirection = 1;
-        setBackgroundPhase(3);
         shiftContents(1);
         card_DOMs[card_DOMs.length - 1].scrollIntoView();
     }
@@ -144,7 +130,7 @@ text_DOM.addEventListener('scroll', () => {
         ) {
             if (!scrollSectionFlags[i]) {
                 resetSectionFlags(i);
-                setAllInvisible(i);
+                setAllContentInvisible(i);
 
                 if (i < CONTENT_DOM_list.length - 1 && scrollYDirection === 1) {
                     CONTENT_DOM_list[i+1].classList.remove('fadein-effect');
@@ -166,7 +152,6 @@ text_DOM.addEventListener('scroll', () => {
                         setBackgroundPhase(1);
                     break}
                     case 4: {
-                        setBackgroundPhase(2);
                         shiftContents(0);
                     break}
                     default: {}
