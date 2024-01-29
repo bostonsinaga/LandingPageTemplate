@@ -20,15 +20,15 @@
 }
 
 .background-0 {
-    background-image: url('./img/office.jpg');
+    background-image: url('../img/office.jpg');
 }
 
 .background-1 {
-    background-image: url('./img/city.jpg');
+    background-image: url('../img/city.jpg');
 }
 
 .profile-picture {
-    background-image: url('./img/ceo.jpg');
+    background-image: url('../img/ceo.jpg');
     background-position: center;
     background-size: cover;
     box-shadow: 1px 0px 10px black;
