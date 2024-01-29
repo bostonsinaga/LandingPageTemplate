@@ -39,14 +39,13 @@
     overflow-y: scroll;
 }
 
-.about {
+.text .about {
     width: inherit;
 }
 
-.title,
-.about .card,
-.contact {
-    width: var(--text-width);
+.text .title,
+.text .about .card,
+.text .contact {
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -67,7 +66,6 @@
 }
 
 .about .card {
-    padding: 100px;
     justify-content: center;
     gap: 20px;
     box-sizing: border-box;
@@ -78,7 +76,6 @@
 }
 
 .contact {
-    padding: 0 200px 0 200px;
     justify-content: center;
     gap: 20px;
     box-sizing: border-box;
@@ -131,6 +128,23 @@
     .CONTENT .profile-picture,
     .CONTENT .text {
         position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+    .about .card {
+        padding: 20px;
+        align-items: center;
+    }
+
+    .about .card h5 {
+        align-self: flex-start;
+    }
+
+    .contact {
+        align-items: center;
     }
 }
 
@@ -155,6 +169,20 @@
     .text {
         grid-area: text;
         grid-column: var(--text-width);
+    }
+
+    .about .card {
+        padding: 100px;
+    }
+
+    .text .title,
+    .text .about .card,
+    .text .contact {
+        width: var(--text-width);
+    }
+
+    .contact {
+        padding: 0 200px 0 200px;
     }
 
     @keyframes text-to-left {
