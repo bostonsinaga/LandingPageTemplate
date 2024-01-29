@@ -10,7 +10,8 @@ const contact_DOM = text_DOM.querySelector('.contact');
 
 let scrollYDirection = 1,
     previousScrollYLength = 0,
-    isContentReachBottom = false;
+    isContentReachBottom = false,
+    isPortrait = false;
 
 let CONTENT_DOM_list = [title_DOM];
 CONTENT_DOM_list = CONTENT_DOM_list.concat(...card_DOMs);
@@ -85,16 +86,36 @@ function shiftContents(step) {
     }
 }
 
+function updateScreenOrientation() {
+    if (window.innerWidth / window.innerHeight >= 1) {
+        isPortrait = false;
+    }
+    else isPortrait = true;
+}
+
+function updateDarkerBackground() {
+    for (const dom of [void_DOM, profilePicture_DOM, text_DOM]) {
+        if (!isPortrait) {
+            dom.classList.add('darker-background');
+        }
+        else dom.classList.remove('darker-background');
+    }
+}
+
 /** INITIAL STYLES */
 
+updateScreenOrientation();
+updateDarkerBackground();
 setAllContentInvisible(0);
 background_DOMs[1].style.opacity = 0;
 
-for (const dom of [void_DOM, profilePicture_DOM, text_DOM]) {
-    dom.classList.add('darker-background');
-}
-
 /** SCROLL EVENT */
+
+// update the 'isPortrait' if window size change
+window.addEventListener('resize', () => {
+    updateScreenOrientation();
+    updateDarkerBackground();
+});
 
 // scroll up from bottom
 window.addEventListener('scroll', () => {
@@ -105,6 +126,7 @@ window.addEventListener('scroll', () => {
     }
 });
 
+// from start scrolling
 text_DOM.addEventListener('scroll', () => {
 
     if (previousScrollYLength < text_DOM.scrollTop) {
